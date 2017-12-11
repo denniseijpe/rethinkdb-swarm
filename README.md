@@ -27,3 +27,9 @@ Healthcheck is performed by `probe.go`, which is based on
 https://github.com/rosskukulinski/rethinkdb-kubernetes.
 
 The probe connects to the server and executes a basic command.
+
+## Security
+
+The RethinkDB Web Console is not secured by default. You should use a proxy for it
+(Traefik with Let's Encrypt certificates is my preference)
+or SSH tunnels. That's not part of this project.
