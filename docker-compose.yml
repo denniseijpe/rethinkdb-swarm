@@ -38,10 +38,14 @@ services:
     environment:
       - RETHINKDB_PASSWORD=secret
 
+    hostname: "{{.Node.Hostname}}"
+
     deploy:
       restart_policy:
         condition: any
         delay: 5s
+      update_config:
+        delay: 1m
       mode: global
       placement:
         constraints:
