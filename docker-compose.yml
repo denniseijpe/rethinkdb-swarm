@@ -1,0 +1,64 @@
+version: '3.3'
+
+services:
+  admin:
+    image: denniseijpe/rethinkdb-swarm
+
+    command: admin
+
+    depends_on:
+      - server
+
+    environment:
+      - RETHINKDB_PASSWORD=secret
+
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+      replicas: 1
+      update_config:
+        delay: 10s
+      placement:
+        constraints:
+          - node.labels.rethinkdb == production
+
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: ingress
+
+    networks:
+      - net
+
+  server:
+    image: denniseijpe/rethinkdb-swarm
+
+    environment:
+      - RETHINKDB_PASSWORD=secret
+
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+      mode: global
+      placement:
+        constraints:
+          - node.labels.rethinkdb == production
+
+    networks:
+      - net
+
+    volumes:
+      - data:/data
+
+volumes:
+  data:
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+    driver_opts:
+      encrypted: ''
