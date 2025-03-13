@@ -1,6 +1,6 @@
 services:
   admin:
-    image: denniseijpe/rethinkdb-swarm
+    image: denniseijpe/rethinkdb-swarm:2.4.4
 
     command: admin
 
@@ -31,7 +31,7 @@ services:
       - net
 
   server:
-    image: denniseijpe/rethinkdb-swarm
+    image: denniseijpe/rethinkdb-swarm:2.4.4
 
     environment:
       - RETHINKDB_PASSWORD=secret
